@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Iniciar sesión{% endblock %}
+{% block content %}
+<div class="columns">
+    <div class="column">
+        <h3 class="is-size-3">Iniciar sesión</h3>
+        <form action="{{ url_for('users.login') }}" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            {{ form.username.label }}
+            {{ form.username(class_="input", placeholder="Usuario") }}
+            {% for error in form.username.errors %}<p class="help is-danger">{{ error }}</p>{% endfor %}
+            {{ form.password.label }}
+            {{ form.password(class_="input", placeholder="Contraseña") }}
+            {% for error in form.password.errors %}<p class="help is-danger">{{ error }}</p>{% endfor %}
+            <button type="submit" class="button is-success mt-4">Iniciar sesión</button>
+            <a href="{{ url_for('users.index') }}" class="button is-primary mt-4">Volver</a>
+        </form>
+        <p class="mt-4">¿No tienes cuenta? <a href="{{ url_for('users.register') }}">Regístrate</a></p>
+    </div>
+</div>
+{% endblock %}

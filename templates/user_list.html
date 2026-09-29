@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Usuarios{% endblock %}
+{% block content %}
+<div class="columns">
+    <div class="column">
+        <h3 class="is-size-3">Bienvenido al Mini Sistema</h3>
+        <p class="mb-3">Usuarios registrados: <strong>{{ users|length }}</strong></p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Correo</th>
+                    <th>Fecha de registro</th>
+                    <th>Perfil</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username|capitalize }}</td>
+                    <td>{{ user.email|lower }}</td>
+                    <td>{{ user.created_at.strftime('%d/%m/%Y') }}</td>
+                    <td><a href="{{ url_for('users.profile', id=user.id) }}" class="button is-info">Ver perfil</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+<div class="columns">
+    <div class="column">
+        <h3 class="is-size-3">Perfil de {{ user.username|capitalize }}</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <th>Usuario</th>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <th>Correo</th>
+                    <td>{{ user.email|lower }}</td>
+                </tr>
+                <tr>
+                    <th>Fecha de registro</th>
+                    <td>{{ user.created_at.strftime('%d/%m/%Y %H:%M') }}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% if session['user_id'] == user.id %}
+        <a href="{{ url_for('users.edit_profile', id=user.id) }}" class="button is-info">Editar</a>
+        <form action="{{ url_for('users.delete_user', id=user.id) }}" method="post" class="form-eliminar">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="button is-danger">Eliminar</button>
+        </form>
+        {% endif %}
+        <a href="{{ url_for('users.index') }}" class="button is-primary">Volver</a>
+    </div>
+</div>
+{% endblock %}

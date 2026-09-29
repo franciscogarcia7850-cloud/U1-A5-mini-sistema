@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Registro{% endblock %}
+{% block content %}
+<div class="columns">
+    <div class="column">
+        <h3 class="is-size-3">Registro de usuario</h3>
+        <form action="{{ url_for('users.register') }}" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            {{ form.username.label }}
+            {{ form.username(class_="input", placeholder="Usuario") }}
+            {% for error in form.username.errors %}<p class="help is-danger">{{ error }}</p>{% endfor %}
+            {{ form.email.label }}
+            {{ form.email(class_="input", placeholder="Correo") }}
+            {% for error in form.email.errors %}<p class="help is-danger">{{ error }}</p>{% endfor %}
+            {{ form.password.label }}
+            {{ form.password(class_="input", placeholder="Contraseña") }}
+            {% for error in form.password.errors %}<p class="help is-danger">{{ error }}</p>{% endfor %}
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password(class_="input", placeholder="Confirmar contraseña") }}
+            {% for error in form.confirm_password.errors %}<p class="help is-danger">{{ error }}</p>{% endfor %}
+            <button type="submit" class="button is-success mt-4">Registrarme</button>
+            <a href="{{ url_for('users.index') }}" class="button is-primary mt-4">Volver</a>
+        </form>
+        <p class="mt-4">¿Ya tienes cuenta? <a href="{{ url_for('users.login') }}">Inicia sesión</a></p>
+    </div>
+</div>
+{% endblock %}

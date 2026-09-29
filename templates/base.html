@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Sistema - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    {% block nav %}
+    <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a href="{{ url_for('users.index') }}" class="navbar-item"><strong>Mini Sistema</strong></a>
+        </div>
+        {# is-active hace que el menú también se vea en pantallas chicas #}
+        <div class="navbar-menu is-active">
+            <div class="navbar-start">
+                <a class="navbar-item" href="{{ url_for('users.index') }}">Usuarios</a>
+                {% if session.get('user_id') %}
+                <a class="navbar-item" href="{{ url_for('users.profile', id=session['user_id']) }}">Mi perfil</a>
+                {% endif %}
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <span class="mr-3">Hola, {{ session['username']|default('invitado')|capitalize }}</span>
+                    <div class="buttons">
+                        {% if session.get('user_id') %}
+                        <a href="{{ url_for('users.logout') }}" class="button is-light">Cerrar sesión</a>
+                        {% else %}
+                        <a href="{{ url_for('users.register') }}" class="button is-primary"><strong>Registrarse</strong></a>
+                        <a href="{{ url_for('users.login') }}" class="button is-light">Iniciar sesión</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
+
+    <section class="section">
+        {% include 'flash.html' %}
+        {% block content %}{% endblock %}
+    </section>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
